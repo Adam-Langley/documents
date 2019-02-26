@@ -1778,6 +1778,25 @@ See [documentation](https://aspnetzero.com/Documents/Development-Guide-Rad-Tool)
 
 #### Configuration
 
+##### DevOps: Secure Credential Management
+It is generally recommended that any configuration files (such as your json) which are
+under source control, not contain any credentials, as it risks leaking sensitive
+information such as production passwords.
+You can abstract app-settings into app-secrets on your local development environment, and
+Azure app-settings in your deployed environments (staging/production).
+The following describes how to achieve this.
+
+At a high level:
+Local Development:
+1. Add a unique value to your [ProductName].Core.csproj project file.
+2. Launch a command line in the same csproj folder, and use `dotnet user-secrets set`
+to write your database credentials to your secret store.
+Azure Deployment:
+1. Through Azure Portal, add an 'app-setting' for `ConnectionStrings:Default`
+
+Full instructions on creating a secret value can be found here:
+https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=macos
+
 ASP.NET Zero is properly configured for development. But when you want
 to publish your application to your **test/production environment**, you
 may need to change some configuration in order to make it properly work.
